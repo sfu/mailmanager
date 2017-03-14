@@ -67,4 +67,6 @@
     max-height: 1000px;
     vertical-align: middle;
     overflow-y: auto;
+    line-hight: normal;
+    font-size: small;
 }
