@@ -128,12 +128,8 @@ sub viewmsg()
 	}
 	my $msg = process_q_cmd($server,"view $qid");
 
-	$msg =~ s/</&lt;/g;
-	$msg =~ s/>/&gt;/g;
-	$msg =~ s/&/&amp;/g;
-
 	print "Content-type: text/html\n\n";
-	print "<pre>$msg</pre>\n";
+	print "<pre>",$q->escapeHTML($msg),"</pre>\n";
 
 	exit 0;
 }
