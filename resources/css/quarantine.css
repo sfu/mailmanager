@@ -1,0 +1,70 @@
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -16px; /* half width of the spinner gif */
+    margin-top: -16px; /* half height of the spinner gif */
+    text-align:center;
+    z-index:1234;
+    overflow: auto;
+    width: 32px; /* width of the spinner gif */
+    height: 42px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
+
+.messageContainer {
+    min-height: 400px;
+}
+
+.messageContainer table {
+    width: 98%;
+    margin: auto;
+}
+
+.messageContainer input {
+    margin: auto;
+}
+
+.messageContainer td {
+    padding: 1px 1px 1px 4px;
+}
+
+.messageContainer tr {
+    padding: 1px 1px 1px 4px;
+}
+
+.messageServer td {
+    padding: 10px 4px 4px 4px;
+}
+
+.messageHeader {
+    font-weight: bold;
+}
+
+.messageList {
+    font-size: 0.8em;
+    background-color: white;
+}
+
+.qbuttons {
+    float: left;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.refreshButton {
+    float: right;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.overlay-content {
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    margin: 1em;
+    padding: 20px;
+    max-height: 1000px;
+    vertical-align: middle;
+    overflow-y: auto;
+}
