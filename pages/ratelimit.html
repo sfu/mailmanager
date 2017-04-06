@@ -234,40 +234,41 @@
 											<div class="inherited-parsys below-nav">				</div>
 
 				                </div>
-			
-			<div class="qbuttons">
-            <button class="qbutton" id="r_sel"  >Release selected</button>
-            <button class="qbutton" id="r_sel_s">Release selected sender(s)</button>
-            <button class="qbutton" id="r_sel_h">Release selected host(s)</button>
-            <button class="qbutton" id="d_sel"  >Delete selected</button>
-            <button class="qbutton" id="d_sel_s">Delete selected sender(s)</button>
-            <button class="qbutton" id="d_sel_h">Delete selected host(s)</button>
-
-	
-			</div>
-            <div class="refreshButton">
-            <a href="#" onClick="refreshMessageList()"><img src="/mailmanager/resources/images/refreshIcon.gif"></a>
-            </div>
-
-			<div class="mobile-sub-nav"><div class="mobile-sub-menu">
-	</div></div>
+    <section class="main">
+    The Rate Limit Milter, which runs on the antibody1 and 2 VMs, monitors all mail connections flowing through the externally facing mail servers. It looks for abuse by counting the number of recipients, messages, and authenticated SMTP connections users make. Once a user exceeds the limit, all further messages from that user for the day are quarantined until released by an administrator through this app. 
+    <br><br>
+    Rate Limit Milter Control allows you to manage whitelists and blacklists for the filter. Whitelisted IPs and sender email addresses may send an unlimited number of messages from on-campus. For authenticated users coming from off-campus IPs, you <b>must<b> specify a new higher threshold to quarantine at. The threshold represents the number of messages seen from either an IP or authenticated user
+    <br><br>
+    For blacklisted IP Networks, messages received from that network, either directly or via SFU Connect, will be quarantined immediately. Blacklisted IP entries are specified in CIDR notation (e.g. 142.58.0.0/16). If no CIDR notation is specified, /32 will be assumed.
 
 
-            <section class="main">
-									<div class="inherited-parsys above-main">	</div>
 
-<div class="parsys main_content">
+
+									
+
+
     <div class="text parbase section">
-    <form name="messageForm" id="messageForm" method="post">
+    <form name="quickaddForm" id="quickaddForm" method="post">
     <input type="hidden" id="cmd" name="cmd" value=""/>
-    <input type="hidden" id="filterOn" name="filterOn" value=""/>
-
-    <div id="messageContainer" class="messageContainer">
-     No Messages
+    Quick-Add a whitelist entry:<br>
+    <div class="fieldArea">
+    <label class="fieldLabelArea">IP, computing ID, or email address: </label>
+    <div class="fieldValueArea"><input type='text' id='address_w' name='address_w' value=''></div>
     </div>
+    <div class="fieldArea">
+    <label class="fieldLabelArea">New Threshold: </label>
+    <div class="fieldValueArea"><input type='text' id='threshold_w' name='threshold_w' value='1000'></div>
+    </div>
+    <button class="qbutton" id="w_sel"  >Add</button>
+<br><br>
+    Quick-Add a blacklist entry:<br>
+    <div class="fieldArea">
+    <label class="fieldLabelArea">IP or network in CIDR notation: </label>
+    <div class="fieldValueArea"><input type='text' id='address_b' name='address_b' value=''></div>
+    </div>
+    <button class="qbutton" id="b_sel"  >Add</button>
     </form>
-    </div>
-</div>
+  
 
 					<div class="inherited-parsys below-main">				</div>
 
