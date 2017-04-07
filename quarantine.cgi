@@ -5,6 +5,7 @@ use CGI;
 use IO::Socket::INET;
 
 @servers = ("rm-rstar1.tier2.sfu.ca","rm-rstar2.tier2.sfu.ca","mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","pobox1.tier2.sfu.ca","pobox2.tier2.sfu.ca","mailgw.alumni.sfu.ca");
+@mailfromds = ("antibody1.tier2.sfu.ca","antibody2.tier2.sfu.ca");
 
 $pagedir = "pages";
 
@@ -20,6 +21,8 @@ $q = CGI->new;
 main_page() if (!scalar(@params));
 
 $cmd = $q->param("cmd");
+$pagename = $q->param("page");
+
 
 if ($cmd eq "getqueue")
 {
@@ -33,7 +36,26 @@ elsif ($cmd =~ /^[rd]_sel/)
 {
 	release_or_del_msgs($cmd);
 }
+elsif ($cmd =~ /^ratelimit_add_([wb])/)
+{
+	ratelimit_quickadd($1);
+}
 
+# TODO: We should be able to pass a status message to the page that displays briefly after the page loads
+
+
+if ($pagename eq "ratelimit")
+{
+	load_page("ratelimit.html")
+}
+elsif ($pagename eq "ratelimit_b")
+{
+	load_page("ratelimit_b.html")
+}
+elsif ($pagename eq "ratelimit_w")
+{
+	load_page("ratelimit_w.html")
+}
 
 # If we got here, unknown command, just reload the main page
 
@@ -119,7 +141,7 @@ sub get_queue()
 sub viewmsg()
 {
 	my $msgid = shift;
-	$msgid =~ s/^a_//;
+	$msgid =~ s/^a_//; #/
 	($server,$qid) = split(/_/,$msgid);
 	if (!$server_h{$server})
 	{
@@ -206,6 +228,35 @@ sub get_selected_msgs()
 		}
 	}
 	return @results;
+}
+
+# Handle additions to the whitelist or blacklist db files for the Rate Limit
+# Milter servers
+
+sub ratelimit_quickadd()
+{
+	my $op = shift;
+
+	my $value = "";
+
+	# Collect the key (IP, netblock, username, or email address) from the form
+	my $key = $q->param("address_".$op);
+	# Collect the value (only set if it's a whitelist entry)
+	$value = $q->param("threshold") if ($op eq "w");
+
+	# TODO: We should do some sanity checking on the key/value pair we got
+
+	# Encode the key/value pair (even if the value is empty) as a JSON-encoded hash
+	$data = to_json({ $key => $value });
+
+	# Target file we'll be making changes to
+	my $what = ($op eq "b") ? "mailfromdblacklist" : "mailfromdwhitelist";
+
+	foreach $server (@mailfromds)
+	{
+		# Send the 'append' command to each mailfromd server
+		process_q_cmd($server,"append $what $data");
+	}
 }
 
 

@@ -248,8 +248,9 @@
 
 
     <div class="text parbase section">
-    <form name="quickaddForm" id="quickaddForm" method="post">
+    <form name="messageForm" id="messageForm" method="post">
     <input type="hidden" id="cmd" name="cmd" value=""/>
+    <input type="hidden" id="page" name="page" value="ratelimit">
     Quick-Add a whitelist entry:<br>
     <div class="fieldArea">
     <label class="fieldLabelArea">IP, computing ID, or email address: </label>
@@ -259,14 +260,14 @@
     <label class="fieldLabelArea">New Threshold: </label>
     <div class="fieldValueArea"><input type='text' id='threshold_w' name='threshold_w' value='1000'></div>
     </div>
-    <button class="qbutton" id="w_sel"  >Add</button>
+    <button class="qbutton" id="rl_add_w"  >Add</button>
 <br><br>
     Quick-Add a blacklist entry:<br>
     <div class="fieldArea">
     <label class="fieldLabelArea">IP or network in CIDR notation: </label>
     <div class="fieldValueArea"><input type='text' id='address_b' name='address_b' value=''></div>
     </div>
-    <button class="qbutton" id="b_sel"  >Add</button>
+    <button class="qbutton" id="rl_add_b"  >Add</button>
     </form>
   
 
