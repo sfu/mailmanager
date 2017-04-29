@@ -235,12 +235,15 @@
 
 				                </div>
     <section class="main">
+      <div><div class="expander">&gt; Rate Limit Milter (click to expand)</div>
+      <div class="milter-info">
     The Rate Limit Milter, which runs on the antibody1 and 2 VMs, monitors all mail connections flowing through the externally facing mail servers. It looks for abuse by counting the number of recipients, messages, and authenticated SMTP connections users make. Once a user exceeds the limit, all further messages from that user for the day are quarantined until released by an administrator through this app. 
     <br><br>
-    Rate Limit Milter Control allows you to manage whitelists and blacklists for the filter. Whitelisted IPs and sender email addresses may send an unlimited number of messages from on-campus. For authenticated users coming from off-campus IPs, you <b>must<b> specify a new higher threshold to quarantine at. The threshold represents the number of messages seen from either an IP or authenticated user
+    Rate Limit Milter Control allows you to manage whitelists and blacklists for the filter. Whitelisted IPs and sender email addresses may send an unlimited number of messages from on-campus. For authenticated users coming from off-campus IPs, you <b>must</b> specify a new higher threshold to quarantine at. The threshold represents the number of messages seen from either an IP or authenticated user
     <br><br>
     For blacklisted IP Networks, messages received from that network, either directly or via SFU Connect, will be quarantined immediately. Blacklisted IP entries are specified in CIDR notation (e.g. 142.58.0.0/16). If no CIDR notation is specified, /32 will be assumed.
-
+        </div>
+    </div>
 
 
 

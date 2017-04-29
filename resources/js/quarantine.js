@@ -43,6 +43,11 @@ $(function() {
 		$("#messageForm").submit();
 	});
 
+    // make the rate limiter info dialogue exandable
+    $(".expander").click(function(){
+        $(".milter-info").slideToggle();
+    })
+
 	// Initialize the msg viewer popup
     $("#msg-overlay").popup({
         opacity: 0.5,

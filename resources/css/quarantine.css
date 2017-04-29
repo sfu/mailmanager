@@ -45,6 +45,10 @@
     background-color: white;
 }
 
+.milter-info {
+    display: none;
+}
+
 .qbuttons {
     float: left;
     margin-top: 10px;
