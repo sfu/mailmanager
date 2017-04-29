@@ -174,6 +174,14 @@ sub release_or_del_msgs()
 		@filters = split(/;/,$q->param("filterOn"));
 		foreach (@filters)
 		{
+			if ($cmd =~ /_h$/)
+			{
+				# Our filter is a host - strip it down to just the IP address if possible
+				if (/\[(\d+\.\d+\.\d+\.\d+)\]/)
+				{
+					$_ = $1;
+				}
+			}
 			release_or_del_filter_msg($_,$del);
 		}
 	} 
