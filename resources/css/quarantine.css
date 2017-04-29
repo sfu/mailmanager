@@ -49,6 +49,17 @@
     display: none;
 }
 
+
+/* copied from form element in CLF style sheet */
+.info-box {
+    margin:1em 0;
+    border:1px solid #d2e1e6;
+    border-radius:3px 3px 3px 3px;
+    padding:.8em;
+    background-color:#e9eff1;
+}
+
+
 .qbuttons {
     float: left;
     margin-top: 10px;
