@@ -169,7 +169,7 @@ sub release_or_del_msgs()
 
 	# If we're releasing/deleting based on sender or hostname, collect the filter
 	# Otherwise, get the list of selected queue IDs
-	if ($cmd =~ /_[sh]$/)
+	if ($cmd =~ /_[sha]$/)
 	{
 		@filters = split(/;/,$q->param("filterOn"));
 		foreach (@filters)

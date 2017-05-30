@@ -22,7 +22,7 @@ $(function() {
 		action = this.id;
         // button ID is the action to perform
 		$("#cmd").val(action);
-        var needsFilter = action.match(/_[sh]$/);
+        var needsFilter = action.match(/_[sha]$/);
         // if the action is to release/delete based on sender or hostname, generate list of selected
         // messages to build the filter from
         if (needsFilter) {
@@ -31,6 +31,9 @@ $(function() {
             var filterType = "_sender";
             if (needsFilter == "_h") {
                 filterType = "_host"
+            }
+            if (needsFilter == "_a") {
+                filterType = "_authuser"
             }
             // collect values from all selected messages
             // get the ID of each checked box, append the filter type (_sender or _host),
