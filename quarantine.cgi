@@ -115,7 +115,7 @@ sub get_queue()
 					<tr id=\"row_${server}_$msg->{id}\" class=\"messageList\">
 							 <td class=\"messageSelect\">
 							 	<input name=\"$id\" id=\"$id\" class=\"messageSelector\" type=\"checkbox\"/></td>
-							 <td class=\"msgEnvSender\"><span id=\"${id}_sender\">$msg->{sender}</span></td>
+							 <td class=\"msgEnvSender\"><span id=\"${id}_sender\"><a href=\"#\" id=\"a_$id\" class=\"viewmsg\">$msg->{sender}</a></span></td>
 							 <td class=\"msgAuthSender\"><span id=\"${id}_authuser\">$msg->{authuser}</span></td>
 							 <td class=\"msgHost\"><span id=\"${id}_host\">$msg->{host}</span></td>
 							 <td class=\"msgSubject\"><a href=\"#\" id=\"a_$id\" class=\"viewmsg\">$msg->{subject}</a></td>
