@@ -4,7 +4,7 @@
 
 var action;
 
-var baseUrl = window.location.protocol + "://" + window.location.hostname + "/" + window.location.pathname
+var baseUrl = window.location.protocol + "//" + window.location.hostname + window.location.pathname
 
 $(function() {
     $(document).bind("ajaxSend", function() {
