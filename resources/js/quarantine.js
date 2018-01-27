@@ -4,6 +4,8 @@
 
 var action;
 
+var baseUrl = "/" + window.location.pathname
+
 $(function() {
     $(document).bind("ajaxSend", function() {
         $("#spinner").show();
@@ -63,7 +65,7 @@ $(function() {
 });
 
 function refreshMessageList() {
-    $("#messageContainer").load("quarantine.cgi?cmd=getqueue");
+    $("#messageContainer").load(baseUrl + "?cmd=getqueue");
 }
 
 // Run after the message list loads to hook it into jQuery and add CSS
@@ -110,5 +112,5 @@ $.fn.shiftSelectable = function() {
 
 function viewMsg(msgid) {
 	$("#msg-overlay").popup('show');
-	$("#msg-overlay-content").load("quarantine.cgi?cmd=view&msgid="+msgid);
+	$("#msg-overlay-content").load(baseURL + "?cmd=view&msgid="+msgid);
 }
