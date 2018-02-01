@@ -112,5 +112,5 @@ $.fn.shiftSelectable = function() {
 
 function viewMsg(msgid) {
 	$("#msg-overlay").popup('show');
-	$("#msg-overlay-content").load(baseURL + "?cmd=view&msgid="+msgid);
+	$("#msg-overlay-content").load(baseUrl + "?cmd=view&msgid="+msgid);
 }
