@@ -4,7 +4,7 @@ use JSON;
 use CGI;
 use IO::Socket::INET;
 
-@servers = ("rm-rstar1.tier2.sfu.ca","mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","pobox1.tier2.sfu.ca","pobox2.tier2.sfu.ca","mailgw.alumni.sfu.ca");
+@servers = ("mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","pobox1.tier2.sfu.ca","pobox2.tier2.sfu.ca","mailgw.alumni.sfu.ca");
 @mailfromds = ("antibody1.tier2.sfu.ca","antibody2.tier2.sfu.ca");
 
 $pagedir = "pages";
