@@ -77,7 +77,7 @@ sub get_queue()
 	$start = $q->param("start") if ($q->param("start"));
 	my @today = localtime(time());
 
-	my $unique = defined($query->param('uniqueusers'));
+	my $unique = defined($q->param('uniqueusers'));
 	my %seenusers;
 
 	print "Content-type: text/html\n\n";
