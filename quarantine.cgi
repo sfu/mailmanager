@@ -77,9 +77,14 @@ sub get_queue()
 	$start = $q->param("start") if ($q->param("start"));
 	my @today = localtime(time());
 
+	my $unique = defined($query->param('uniqueusers'));
+	my %seenusers;
+
 	print "Content-type: text/html\n\n";
 
-	my $heading = "<tr id=\"messageHeading\" class=\"messageHeading\"><td>√</td><td>Envelope Sender</td><td>X-Auth-Sender</td><td>Host</td><td>Subject</td><td>Date</td><td>Recipients</td></tr>\n";
+	$recipColumn = ($unique) ? "Messages" : "Recipients";
+
+	my $heading = "<tr id=\"messageHeading\" class=\"messageHeading\"><td>√</td><td>Envelope Sender</td><td>X-Auth-Sender</td><td>Host</td><td>Subject</td><td>Date</td><td>$recipColumn</td></tr>\n";
 	# If starting from the beginning, add the header to the result
 	if (!$start)
 	{
@@ -97,6 +102,11 @@ sub get_queue()
 			{
 				$total++;
 				next if ($start > $total);
+				my $authuser = $msg->{authuser};
+				$authuser = $msg->{sender} if (!defined($authuser) || $authuser eq "");
+
+				next if ($unique && $seenusers{$authuser});
+				$seenusers{$authuser}++;
 
 				# Calculate date the msg was originally sent
 				my @msgtime = localtime($msg->{ctime});
@@ -110,6 +120,7 @@ sub get_queue()
 				}
 					
 				# Build the HTMl table row for this msg
+				$recipValue = ($unique) ? "###$authuser###" : $msg->{recips};
 				my $id = "${server}_$msg->{id}";
 				$content .= "
 					<tr id=\"row_${server}_$msg->{id}\" class=\"messageList\">
@@ -120,7 +131,7 @@ sub get_queue()
 							 <td class=\"msgHost\"><span id=\"${id}_host\">$msg->{host}</span></td>
 							 <td class=\"msgSubject\"><a href=\"#\" id=\"a_$id\" class=\"viewmsg\">$msg->{subject}</a></td>
 							 <td class=\"msgDate\">$date</td>
-							 <td class=\"msgRecips\">$msg->{recips}</td>
+							 <td class=\"msgRecips\">$recipValue</td>
 					</tr>\n";
 				last if ($total == $limit);
 			}
@@ -133,6 +144,15 @@ sub get_queue()
 	if ($total == 0 && !$start)
 	{
 		$content = "No Messages";		
+	}
+
+	if ($unique)
+	{
+		foreach $key (keys %seenusers)
+		{
+			my $count = $seenusers{$key};
+			$content =~ s/###$key###/$count/g;
+		}
 	}
 	print $content;
 	exit 0;

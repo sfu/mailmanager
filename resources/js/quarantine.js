@@ -65,7 +65,13 @@ $(function() {
 });
 
 function refreshMessageList() {
-    $("#messageContainer").load(baseUrl + "?cmd=getqueue");
+    var uniqueusers = ""
+    if ($("#uniqueusers").is(":checked"))
+    {
+        var unique = "&uniqueusers=1"
+    }
+
+    $("#messageContainer").load(baseUrl + "?cmd=getqueue" + unique);
 }
 
 // Run after the message list loads to hook it into jQuery and add CSS
