@@ -65,10 +65,10 @@ $(function() {
 });
 
 function refreshMessageList() {
-    var uniqueusers = ""
+    var unique = ""
     if ($("#uniqueusers").is(":checked"))
     {
-        var unique = "&uniqueusers=1"
+        unique = "&uniqueusers=1"
     }
 
     $("#messageContainer").load(baseUrl + "?cmd=getqueue" + unique);
