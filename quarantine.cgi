@@ -106,7 +106,7 @@ sub get_queue()
 				$authuser = $msg->{sender} if (!defined($authuser) || $authuser eq "");
 
 				$seenusers{$authuser}++;
-				next if ($unique && $seenusers{$authuser});
+				next if ($unique && $seenusers{$authuser} > 1);
 
 				# Calculate date the msg was originally sent
 				my @msgtime = localtime($msg->{ctime});
