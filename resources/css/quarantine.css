@@ -57,6 +57,10 @@
     color: red;
 }
 
+.hiddenrcpts {
+    display: none;
+}
+
 
 /* copied from form element in CLF style sheet */
 .info-box {

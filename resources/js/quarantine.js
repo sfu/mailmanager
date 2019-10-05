@@ -127,3 +127,14 @@ function viewMsg(msgid) {
 	$("#msg-overlay").popup('show');
 	$("#msg-overlay-content").load(baseUrl + "?cmd=view&msgid="+msgid);
 }
+
+// Unhide/hide large recipient list
+
+function unhideRecipients() {
+    var x = document.getElementById("hiddenrcpts");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }

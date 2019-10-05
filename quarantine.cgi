@@ -207,8 +207,64 @@ sub viewmsg()
 	my $msg = process_q_cmd($server,"view $qid");
 
 	print "Content-type: text/html\n\n";
-	print "<pre>",$q->escapeHTML($msg),"</pre>\n";
+	print "<pre>";
+	$rawmsg = $q->escapeHTML($msg);
+	$inpre = 1;
+	$inrcpt = 0;
+	$inmsg = 0;
+	@rcpts = ();
+	foreach $l (split(/\n/,$rawmsg))
+	{
+		if ($inpre)
+		{
+			if ($l !~ /^RCPT:/)
+			{
+				$premsg .= "$l\n";
+			}
+			else
+			{
+				$inpre = 0;
+				$inrcpt = 1;
+			}
+		}
+		if ($inrcpt)
+		{
+			if ($l =~ /^RCPT: (.*)/)
+			{
+				push(@rcpts,$1);
+			}
+			else
+			{
+				$inrcpt = 0;
+				$inmsg = 1;
+			}
+		}
+		if ($inmsg)
+		{
+			$postmsg .= "$l\n";
+		}
+	}
+	if (scalar(@rcpts) < 15)
+	{
+		$premsg .= join("\n",@rcpts);
+		$hiddenrcpts = "0";
+	}
+	else
+	{
+		$premsg .= join("\n",@rcpts[0..9]);
+		$hiddenrcpts = join("\n",@rcpts[10..$#rcpts]);
+	}
 
+	print $premsg;
+	if ($hiddenrcpts ne "0")
+	{
+		print "</pre>";
+		print "[ " . $#rcpts - 10 . " more recipients hidden. <a href=\"#\" onClick=\"unhideRecipients()\"><b>Unhide</b></a> ]\n";
+		print "<div id=\"hiddenrcpts\" class=\"hiddenrcpts\">";
+		print "<pre>$hiddenrcpts</pre>\n";
+		print "</div>\n<pre>";
+	}
+	print $postmsg,"</pre>";
 	exit 0;
 }
 
