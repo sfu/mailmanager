@@ -187,7 +187,7 @@ sub get_queue()
 		foreach $key (keys %seenusers)
 		{
 			my $count = $seenusers{$key};
-			$content =~ s/###$key###/$count/g;
+			$content =~ s/###\Q$key\E###/$count/g;
 		}
 	}
 	print $content;
