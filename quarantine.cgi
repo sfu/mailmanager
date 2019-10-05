@@ -106,7 +106,6 @@ sub get_queue()
 				$total++;
 				next if ($start > $total);
 				my $authuser = $msg->{authuser};
-				$authuser = $msg->{sender};
 				$unclickable = "clickable"; 
 				if (!defined($authuser) || $authuser eq "")
 				{
