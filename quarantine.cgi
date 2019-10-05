@@ -259,7 +259,7 @@ sub viewmsg()
 	if ($hiddenrcpts ne "0")
 	{
 		print "</pre>\n";
-		print "[ " . ($#rcpts - 10) . " more recipients hidden. <a href=\"#\" onClick=\"unhideRecipients()\"><b>Unhide</b></a> ]\n";
+		print "[ " . ($#rcpts - 10) . " more recipients hidden. <a href=\"#\" onClick=\"unhideRecipients()\"><b>Toggle hidden</b></a> ]\n";
 		print "<div id=\"hiddenrcpts\" style=\"display: none;\">";
 		print "<pre>$hiddenrcpts</pre>\n";
 		print "</div>\n<pre>";
