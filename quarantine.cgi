@@ -258,9 +258,9 @@ sub viewmsg()
 	print $premsg;
 	if ($hiddenrcpts ne "0")
 	{
-		print "</pre>";
-		print "[ " . $#rcpts - 10 . " more recipients hidden. <a href=\"#\" onClick=\"unhideRecipients()\"><b>Unhide</b></a> ]\n";
-		print "<div id=\"hiddenrcpts\" class=\"hiddenrcpts\">";
+		print "</pre>\n";
+		print "[ " . ($#rcpts - 10) . " more recipients hidden. <a href=\"#\" onClick=\"unhideRecipients()\"><b>Unhide</b></a> ]\n";
+		print "<div id=\"hiddenrcpts\" style=\"display: none;\">";
 		print "<pre>$hiddenrcpts</pre>\n";
 		print "</div>\n<pre>";
 	}
