@@ -3,6 +3,8 @@
 use JSON;
 use CGI;
 use IO::Socket::INET;
+use FindBin;
+use lib "$FindBin::Bin";
 use Rest;
 
 @servers = ("mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","pobox1.tier2.sfu.ca","pobox2.tier2.sfu.ca","mailgw.alumni.sfu.ca");
