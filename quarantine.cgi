@@ -107,6 +107,7 @@ sub get_queue()
 				next if ($start > $total);
 				my $authuser = $msg->{authuser};
 				$unclickable = "clickable"; 
+				$content .= "<!-- $authuser -->\n";
 				if (!defined($authuser) || $authuser eq "")
 				{
 					if (defined($cached{$msg->{sender}}))
@@ -145,13 +146,13 @@ sub get_queue()
 
 				# Calculate date the msg was originally sent
 				my @msgtime = localtime($msg->{ctime});
-				$date = $msgtime[2].":".$msgtime[1];			
+				$date = sprintf("%02d:%02d",$msgtime[2],$msgtime[1];			
 				if ($msgtime[7] == $today[7] - 1)
 				{
 					$date .= " Yesterday";
 				} elsif ($msgtime[7] != $today[7])
 				{
-					$date .= " $msgtime[4]/$msgtime[3]";
+					$date = sprintf("%s %d/%02d",$date,$msgtime[4],$msgtime[3];
 				}
 					
 				# Build the HTMl table row for this msg
