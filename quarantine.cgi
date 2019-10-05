@@ -3,6 +3,7 @@
 use JSON;
 use CGI;
 use IO::Socket::INET;
+use Rest;
 
 @servers = ("mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","pobox1.tier2.sfu.ca","pobox2.tier2.sfu.ca","mailgw.alumni.sfu.ca");
 @mailfromds = ("antibody1.tier2.sfu.ca","antibody2.tier2.sfu.ca");
@@ -103,7 +104,40 @@ sub get_queue()
 				$total++;
 				next if ($start > $total);
 				my $authuser = $msg->{authuser};
-				$authuser = $msg->{sender} if (!defined($authuser) || $authuser eq "");
+				$authuser = $msg->{sender};
+				$unclickable = "clickable"; 
+				if (!defined($authuser) || $authuser eq "")
+				{
+					if (defined($cached{$msg->{sender}}))
+					{
+						$object = $cached{$msg->{sender}};
+					}
+					else
+					{
+						$object = amaint_type($msg->{sender});
+						$cached{$msg->{sender}} = $object;
+					}
+
+					if (!defined($object->{type}) || $object->{type} eq "unknown")
+					{
+						$authuser = "[<unknown>]";
+						$unclickable = "unclickable";
+					}
+					elsif ($object->{type} eq "maillist")
+					{
+						$authuser = "[<maillist>]";
+						$unclickable = "unclickable";
+					}
+					else
+					{
+						$authuser = $object->{username} . "\@sfu.ca";
+						if ($authuser ne $msg->{sender})
+						{
+							$unclickable = "unclickable";
+							$authuser = "[$authuser]";
+						}
+					}					
+				}
 
 				$seenusers{$authuser}++;
 				next if ($unique && $seenusers{$authuser} > 1);
@@ -127,7 +161,7 @@ sub get_queue()
 							 <td class=\"messageSelect\">
 							 	<input name=\"$id\" id=\"$id\" class=\"messageSelector\" type=\"checkbox\"/></td>
 							 <td class=\"msgEnvSender\"><span id=\"${id}_sender\"><a href=\"#\" id=\"a_$id\" class=\"viewmsg\">$msg->{sender}</a></span></td>
-							 <td class=\"msgAuthSender\"><span id=\"${id}_authuser\">$msg->{authuser}</span></td>
+							 <td class=\"msgAuthSender\"><span id=\"${id}_authuser\" class=\"$unclickable\">$authuser</span></td>
 							 <td class=\"msgHost\"><span id=\"${id}_host\">$msg->{host}</span></td>
 							 <td class=\"msgSubject\"><a href=\"#\" id=\"a_$id\" class=\"viewmsg\">$msg->{subject}</a></td>
 							 <td class=\"msgDate\">$date</td>

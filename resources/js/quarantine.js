@@ -41,8 +41,15 @@ $(function() {
             // get the ID of each checked box, append the filter type (_sender or _host),
             // then retrieve the value of the span with that ID and add it to the values
             $(".messageSelector:checked").each( function() {
-                selected.push($("#"+this.id.replace(re,"\\.")+filterType).text());
+                filterOn = $("#"+this.id.replace(re,"\\.")+filterType).text()
+                if (! filterOn.match(/^\[.*\]$/))
+                {
+                    selected.push(filterOn);
+                }
             });
+            if (selected.length === 0) {
+                return false
+            }
             $("#filterOn").val(selected.join(";"));
         }
 		$("#messageForm").submit();

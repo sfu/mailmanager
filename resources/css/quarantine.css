@@ -49,6 +49,14 @@
     display: none;
 }
 
+.clickable {
+
+}
+
+.unclickable {
+    color: red;
+}
+
 
 /* copied from form element in CLF style sheet */
 .info-box {
