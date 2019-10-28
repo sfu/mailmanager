@@ -7,7 +7,7 @@ use FindBin;
 use lib "$FindBin::Bin";
 use Rest;
 
-@servers = ("mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","pobox1.tier2.sfu.ca","pobox2.tier2.sfu.ca","mailgw.alumni.sfu.ca");
+@servers = ("mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","mailgw3.sfu.ca","mailgw4.sfu.ca","pobox1.tier2.sfu.ca","pobox2.tier2.sfu.ca","pobox1.sfu.ca","pobox2.sfu.ca","mailgw1.alumni.sfu.ca","mailgw2.alumni.sfu.ca","mailgw.alumni.sfu.ca");
 @mailfromds = ("antibody1.tier2.sfu.ca","antibody2.tier2.sfu.ca");
 
 $pagedir = "pages";
