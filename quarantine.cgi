@@ -7,8 +7,8 @@ use FindBin;
 use lib "$FindBin::Bin";
 use Rest;
 
-@servers = ("mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","mailgw3.sfu.ca","mailgw4.sfu.ca","pobox1.tier2.sfu.ca","pobox2.tier2.sfu.ca","pobox1.sfu.ca","pobox2.sfu.ca","mailgw1.alumni.sfu.ca","mailgw2.alumni.sfu.ca","mailgw.alumni.sfu.ca");
-@mailfromds = ("antibody1.tier2.sfu.ca","antibody2.tier2.sfu.ca");
+@servers = ("mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","mailgw3.sfu.ca","mailgw4.sfu.ca","pobox1.sfu.ca","pobox2.sfu.ca","mailgw1.alumni.sfu.ca","mailgw2.alumni.sfu.ca");
+@mailfromds = ("antibody1.tier2.sfu.ca","antibody2.tier2.sfu.ca","lcp-antibody-p1.dc.sfu.ca","lcp-antibody-p2.dc.sfu.ca");
 
 $pagedir = "pages";
 
@@ -26,6 +26,7 @@ main_page() if (!scalar(@params));
 $cmd = $q->param("cmd");
 $pagename = $q->param("page");
 
+log("starting $cmd");
 
 if ($cmd eq "getqueue")
 {
@@ -96,6 +97,7 @@ sub get_queue()
 	my $json = JSON->new->allow_nonref;
 	foreach $server (@servers)
 	{
+		log("getqueue processing $server");
 		my $jsonstr = process_q_cmd($server,"queuejson");
 		$q_json = $json->decode($jsonstr);
 		if ($q_json->{total} > 0)
@@ -332,6 +334,7 @@ sub release_or_del_filter_msg()
 	my $cmd = ($del) ? "delete" : "releaseS";
 	foreach my $server (@servers)
 	{
+		log("release_or_del_by_filter processing $server")
 		process_q_cmd($server,"$cmd $filter");
 		# print "$server releaseS $filter<br>\n";
 	}
@@ -424,4 +427,11 @@ sub process_q_cmd()
 
 	return join("",@res);
 
+}
+
+sub log()
+{
+	open(LOG,">>/tmp/quarantinecgi.log") or return;
+	print LOG scalar(localtime()),": ",@_,"\n";
+	close LOG;
 }
