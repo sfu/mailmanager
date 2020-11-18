@@ -334,7 +334,7 @@ sub release_or_del_filter_msg()
 	my $cmd = ($del) ? "delete" : "releaseS";
 	foreach my $server (@servers)
 	{
-		log("release_or_del_by_filter processing $server")
+		log("release_or_del_by_filter processing $server");
 		process_q_cmd($server,"$cmd $filter");
 		# print "$server releaseS $filter<br>\n";
 	}
