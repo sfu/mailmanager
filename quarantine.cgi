@@ -26,7 +26,7 @@ main_page() if (!scalar(@params));
 $cmd = $q->param("cmd");
 $pagename = $q->param("page");
 
-log("starting $cmd");
+logger("starting $cmd");
 
 if ($cmd eq "getqueue")
 {
@@ -97,7 +97,7 @@ sub get_queue()
 	my $json = JSON->new->allow_nonref;
 	foreach $server (@servers)
 	{
-		log("getqueue processing $server");
+		logger("getqueue processing $server");
 		my $jsonstr = process_q_cmd($server,"queuejson");
 		$q_json = $json->decode($jsonstr);
 		if ($q_json->{total} > 0)
@@ -334,7 +334,7 @@ sub release_or_del_filter_msg()
 	my $cmd = ($del) ? "delete" : "releaseS";
 	foreach my $server (@servers)
 	{
-		log("release_or_del_by_filter processing $server");
+		logger("release_or_del_by_filter processing $server");
 		process_q_cmd($server,"$cmd $filter");
 		# print "$server releaseS $filter<br>\n";
 	}
@@ -429,7 +429,7 @@ sub process_q_cmd()
 
 }
 
-sub log()
+sub logger()
 {
 	open(LOG,">>/tmp/quarantinecgi.log") or return;
 	print LOG scalar(localtime()),": ",@_,"\n";
