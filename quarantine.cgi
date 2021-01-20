@@ -5,6 +5,7 @@ use CGI;
 use IO::Socket::INET;
 use FindBin;
 use lib "$FindBin::Bin";
+use lib "/usr/local/lib";
 use Rest;
 
 @servers = ("mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","mailgw3.sfu.ca","mailgw4.sfu.ca","pobox1.sfu.ca","pobox2.sfu.ca","mailgw1.alumni.sfu.ca","mailgw2.alumni.sfu.ca");
