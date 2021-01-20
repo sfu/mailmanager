@@ -8,8 +8,8 @@ use lib "$FindBin::Bin";
 use lib "/usr/local/lib";
 use Rest;
 
-@servers = ("mailgw1.tier2.sfu.ca","mailgw2.tier2.sfu.ca","mailgw3.sfu.ca","mailgw4.sfu.ca","pobox1.sfu.ca","pobox2.sfu.ca","mailgw1.alumni.sfu.ca","mailgw2.alumni.sfu.ca");
-@mailfromds = ("antibody1.tier2.sfu.ca","antibody2.tier2.sfu.ca","lcp-antibody-p1.dc.sfu.ca","lcp-antibody-p2.dc.sfu.ca");
+@servers = ("mailgw3.sfu.ca","mailgw4.sfu.ca","pobox1.sfu.ca","pobox2.sfu.ca","mailgw1.alumni.sfu.ca","mailgw2.alumni.sfu.ca");
+@mailfromds = ("lcp-antibody-p1.dc.sfu.ca","lcp-antibody-p2.dc.sfu.ca");
 
 $pagedir = "pages";
 
