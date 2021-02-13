@@ -70,9 +70,11 @@ sub get_stats()
     tie %tracked,"DB_File",$TRACKERDB,O_RDONLY,0644,$DB_HASH;
     $total_opened = scalar(keys %tracked);
 
+	print "Content-type: text/html\n\n";
     print "Total delivered: $total_delivered<br>\n";
     print "<a href=\"#\" class=\"viewbounces\">Total bounces: $total_bounces</a><br>\n";
     print "Total viewed: $total_opened<br>\n";
+    exit 0;
 }
 
 sub load_page()
