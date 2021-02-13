@@ -8,6 +8,10 @@
 #   - Add support for previewing message
 #   - Add support for nsse_survey stuff
 
+use JSON;
+use CGI;
+use IO::Socket::INET;
+
 @servers = ("mailgw3.sfu.ca","mailgw4.sfu.ca");
 $TRACKERDB = "/data/tracker.db";
 
