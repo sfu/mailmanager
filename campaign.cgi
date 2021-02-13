@@ -68,7 +68,11 @@ sub get_stats()
         }
     }
     tie %tracked,"DB_File",$TRACKERDB,O_RDONLY,0644,$DB_HASH;
-    $total_opened = scalar(keys %tracked);
+
+    foreach my $k (keys %tracked)
+    {
+        $total_opened++ if (defined($deliveries->{$tracked{$k}}));
+    }
 
 	print "Content-type: text/html\n\n";
     print "Total delivered: $total_delivered<br>\n";
