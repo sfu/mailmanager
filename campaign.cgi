@@ -11,6 +11,7 @@
 use JSON;
 use CGI;
 use IO::Socket::INET;
+use DB_File;
 
 @servers = ("mailgw3.sfu.ca","mailgw4.sfu.ca");
 $TRACKERDB = "/data/tracker.db";
