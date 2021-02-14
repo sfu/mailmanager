@@ -64,14 +64,15 @@ sub get_stats()
         my $bounces = $json->decode($bounces_json[$i]);
         foreach my $k (keys %$bounces)
         {
-            $total_bounces++ if (defined($deliveries->{$bounces->{$k}}));
+            $total_bounces++ if (defined($deliveries->{$k}));
         }
     }
     tie %tracked,"DB_File",$TRACKERDB,O_RDONLY,0644,$DB_HASH;
 
+    $total_opened=0;
     foreach my $k (keys %tracked)
     {
-        $total_opened++ if (defined($deliveries->{$tracked{$k}}));
+        $total_opened++ if (defined($deliveries->{$k}));
     }
 
 	print "Content-type: text/html\n\n";
