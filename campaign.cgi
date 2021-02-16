@@ -57,14 +57,22 @@ sub get_stats()
         $count++;
     }
     $deliveries = $json->decode($deliveries_json);
-    $total_delivered = scalar(keys(%$deliveries));
+    foreach $k (keys %$deliveries)
+    {
+        ($campaign,$junk) = split(/:/,$k);
+        $campaigns{$campaign} = [0,0,0] if (!defined($campaigns{$campaign}));
+        ${$campaigns{$campaign}}[0]++;
+    }
     $total_bounces = 0;
     foreach my $i (0..$count-1)
     {
         my $bounces = $json->decode($bounces_json[$i]);
         foreach my $k (keys %$bounces)
         {
-            $total_bounces++ if (defined($deliveries->{$k}));
+            foreach my $ck (keys %campaigns)
+            {
+                ${$campaigns{$campaign}}[1]++ if (defined($deliveries->{"$ck:$k"}));
+            }
         }
     }
     tie %tracked,"DB_File",$TRACKERDB,O_RDONLY,0644,$DB_HASH;
@@ -72,13 +80,22 @@ sub get_stats()
     $total_opened=0;
     foreach my $k (keys %tracked)
     {
-        $total_opened++ if (defined($deliveries->{$k}));
+        foreach my $ck (keys %campaigns)
+        {
+            ${$campaigns{$campaign}}[2]++ if (defined($deliveries->{"$ck:$k"}));
+        }
     }
 
 	print "Content-type: text/html\n\n";
-    print "Total delivered: $total_delivered<br>\n";
-    print "<a href=\"#\" class=\"viewbounces\">Total bounces: $total_bounces</a><br>\n";
-    print "Total viewed: $total_opened<br>\n";
+
+    print "<table class=\"messageTable\"\n>";
+    print "<tr id=\"messageHeading\" class=\"messageHeading\"><td>Campaign</td><td>Total Sent</td><td>Bounces</td><td>Confirmed Viewed</td></tr>\n";
+    foreach my $k (keys %campaigns)
+    {
+        print "<tr class=\"messageList\">\n";
+        print "<td>$k</td><td>",${$campaigns{$campaign}}[0],"</td><td>",${$campaigns{$campaign}}[1],"</td><td>",${$campaigns{$campaign}}[2],"</td></tr>\n";
+    }
+    
     exit 0;
 }
 
