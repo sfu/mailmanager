@@ -71,7 +71,7 @@ sub get_stats()
         {
             foreach my $ck (keys %campaigns)
             {
-                ${$campaigns{$campaign}}[1]++ if (defined($deliveries->{"$ck:$k"}));
+                ${$campaigns{$ck}}[1]++ if (defined($deliveries->{"$ck:$k"}));
             }
         }
     }
@@ -82,7 +82,7 @@ sub get_stats()
     {
         foreach my $ck (keys %campaigns)
         {
-            ${$campaigns{$campaign}}[2]++ if (defined($deliveries->{"$ck:$k"}));
+            ${$campaigns{$ck}}[2]++ if (defined($deliveries->{"$ck:$k"}));
         }
     }
 
