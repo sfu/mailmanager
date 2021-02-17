@@ -93,7 +93,7 @@ sub get_stats()
     foreach my $k (keys %campaigns)
     {
         print "<tr class=\"messageList\">\n";
-        print "<td>$k</td><td>",${$campaigns{$campaign}}[0],"</td><td>",${$campaigns{$campaign}}[1],"</td><td>",${$campaigns{$campaign}}[2],"</td></tr>\n";
+        print "<td>$k</td><td>",${$campaigns{$k}}[0],"</td><td>",${$campaigns{$k}}[1],"</td><td>",${$campaigns{$k}}[2],"</td></tr>\n";
     }
     
     exit 0;
