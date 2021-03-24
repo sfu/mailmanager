@@ -37,7 +37,7 @@ elsif ($cmd eq "view")
 {
 	viewmsg($q->param("msgid"));		
 }
-elsif ($cmd =~ /^[rd]_sel/)
+elsif ($cmd =~ /^[rd]_sel/ || $cmd =~ /^relsafe_[sa]/)
 {
 	release_or_del_msgs($cmd);
 }
@@ -279,9 +279,6 @@ sub release_or_del_msgs()
     my $del = 0;
     $del = 1 if ($cmd =~ /^d/);
 
-	## after debugging, remove the prints and call main_page when we're done
-	print "Content-type: text/html\n\n";
-
 	# If we're releasing/deleting based on sender or hostname, collect the filter
 	# Otherwise, get the list of selected queue IDs
 	if ($cmd =~ /_[sha]$/)
@@ -298,6 +295,10 @@ sub release_or_del_msgs()
 				}
 			}
 			release_or_del_filter_msg($_,$del);
+			if ($cmd =~ /^relsafe/)
+			{
+				ratelimit_add_safe($_);
+			}
 		}
 	} 
 	else
@@ -380,6 +381,22 @@ sub ratelimit_quickadd()
 	{
 		# Send the 'append' command to each mailfromd server
 		process_q_cmd($server,"append $what $data");
+	}
+}
+
+sub ratelimit_add_safe()
+{
+	my $sender = shift;
+
+	my $adds = {};
+	$sender =~ s/\@sfu.ca$//;
+	$adds->{$sender} = 500;
+	$adds->{"$sender\@sfu.ca"} = 500 if ($sender !~ /@/);
+	$data = to_json($adds);
+	foreach $server (@mailfromds)
+	{
+		# Send the 'append' command to each mailfromd server
+		process_q_cmd($server,"append mailfromdwhitelist $data");
 	}
 }
 
